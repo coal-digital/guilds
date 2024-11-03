@@ -24,7 +24,7 @@ pub fn process_join(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramResult 
         .check_mut(|g| g.authority.eq(&guild_authority.key))?;
     let member = member_info.is_writable()?.has_seeds(
         &[MEMBER, signer_info.key.as_ref()],
-        args.invite_bump,
+        args.member_bump,
         &coal_guilds_api::id(),
     )?.to_account_mut::<Member>(&coal_guilds_api::ID)?;
     invite_info.is_writable()?.has_seeds(

@@ -29,7 +29,7 @@ pub fn process_initialize(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramR
     let config = config_info.to_account_mut::<Config>(&coal_guilds_api::ID)?;
     config.bump = args.config_bump as u64;
     config.total_stake = 0;
-    config.total_multiplier = 16; // 16x
+    config.total_multiplier = 24; // 24x
 
     Ok(())
 }
