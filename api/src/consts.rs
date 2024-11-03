@@ -24,7 +24,7 @@ const PROGRAM_ID: [u8; 32] = unsafe { *(&crate::id() as *const Pubkey as *const 
 pub const CONFIG_ADDRESS: Pubkey =
     Pubkey::new_from_array(ed25519::derive_program_address(&[CONFIG], &PROGRAM_ID).0);
 
-pub const LP_MINT_ADDRESS: Pubkey = pubkey!("E3yUqBNTZxV8ELvW99oRLC7z4ddbJqqR4NphwrMug9zu");
+pub const LP_MINT_ADDRESS: Pubkey = pubkey!("HxsqTfzaKumtQJH13wXprWfuBRo3pFWUZBxCUnhQ7m6i");
 pub const LP_MINT_DECIMALS: u8 = 11;
 
 pub const UNSTAKE_DELAY: i64 = 60 * 60; // 1 hour
