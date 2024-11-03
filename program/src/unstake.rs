@@ -1,4 +1,8 @@
-use coal_guilds_api::prelude::*;
+use coal_guilds_api::{
+    prelude::*,
+    consts::MEMBER,
+};
+use solana_program::msg;
 use steel::*;
 
 /// Stake adds tokens to a guild member's stake to earn a multiplier.
@@ -34,10 +38,15 @@ pub fn process_unstake(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramResu
         .check_mut(|m| m.guild.eq(guild_info.key))?;
 
     if member.last_stake_at.checked_add(UNSTAKE_DELAY).unwrap() > Clock::get()?.unix_timestamp {
+        msg!("Too early to unstake");
         return Err(GuildError::TooEarly.into());
     }
 
-    // Update balances.
+    if member.total_stake.lt(&amount) {
+        msg!("Insufficient balance");
+        return Err(GuildError::InsufficientBalance.into());
+    }
+        // Update balances.
     member.total_stake = member.total_stake.checked_sub(amount).unwrap();
     config.total_stake = config.total_stake.checked_sub(amount).unwrap();
 
@@ -54,12 +63,13 @@ pub fn process_unstake(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramResu
     }
 
     // Transfer tokens.
-    transfer(
-        signer_info,
+    transfer_signed(
+        member_info,
         stake_tokens_info,
         member_tokens_info,
         token_program,
         amount,
+        &[&[MEMBER, signer_info.key.as_ref(), &[member.bump as u8]]],
     )?;
 
     Ok(())

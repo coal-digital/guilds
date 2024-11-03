@@ -4,9 +4,11 @@ use steel::*;
 #[repr(u32)]
 pub enum GuildError {
     #[error("Too early to unstake")]
-    TooEarly = 0,
+    TooEarly = 100,
     #[error("Invalid guild")]
-    InvalidGuild = 1,
+    InvalidGuild = 101,
+    #[error("Insufficient balance")]
+    InsufficientBalance = 102,
 }
 
 error!(GuildError);

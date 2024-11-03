@@ -12,7 +12,7 @@ pub fn process_new_member(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramR
     let args = NewMember::try_from_bytes(data)?;
 
     // Load accounts.
-    let [signer_info, member_info, system_program] =
+    let [signer_info, member_info, stake_tokens_info, mint_info, system_program, token_program, associated_token_program] =
         accounts
     else {
         return Err(ProgramError::NotEnoughAccountKeys);
@@ -41,6 +41,16 @@ pub fn process_new_member(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramR
     member.is_active = 1;
     member.last_stake_at = 0;
     member.total_stake = 0;
+
+    create_associated_token_account(
+        signer_info,
+        member_info,
+        stake_tokens_info,
+        mint_info,
+        system_program,
+        token_program,
+        associated_token_program,
+    )?;
 
     Ok(())
 }

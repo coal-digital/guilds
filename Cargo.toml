@@ -1,9 +1,9 @@
 [workspace]
 resolver = "2"
-members = ["api", "cli", "program"]
+members = ["api", "program"]
 
 [workspace.package]
-version = "0.2.0"
+version = "1.0.0"
 edition = "2021"
 license = "Apache-2.0"
 homepage = "https://minechain.gg"
@@ -21,7 +21,7 @@ const-crypto = "0.1.0"
 log = "0.4"
 futures = "0.3"
 num_enum = "0.7.2"
-coal-guilds-api = { path = "api", version = "0.2" }
+coal-guilds-api = { path = "api", version = "1.0.0" }
 solana-cli-config = "^1.18"
 solana-client = "^1.18"
 solana-program = "^1.18"
