@@ -11,6 +11,9 @@ pub struct Config {
 
     /// The total amount of stake in the guilds program.
     pub total_stake: u64,
+
+    /// The total multiplier of the guilds LP pool.
+    pub total_multiplier: u64,
 }
 
 account!(GuildsAccount, Config);

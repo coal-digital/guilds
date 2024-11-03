@@ -27,6 +27,6 @@ pub const CONFIG_ADDRESS: Pubkey =
 pub const LP_MINT_ADDRESS: Pubkey = pubkey!("E3yUqBNTZxV8ELvW99oRLC7z4ddbJqqR4NphwrMug9zu");
 pub const LP_MINT_DECIMALS: u8 = 11;
 
-pub const UNSTAKE_DELAY: i64 = 60 * 60 * 24; // 1 day
+pub const UNSTAKE_DELAY: i64 = 60 * 60; // 1 hour
 
 pub const LEAVE_DELAY: i64 = 60 * 60; // 1 hour
