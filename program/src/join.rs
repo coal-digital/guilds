@@ -42,7 +42,7 @@ pub fn process_join(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramResult 
     member.guild = *guild_info.key;
     member.is_active = 1;
     member.last_join_at = Clock::get()?.unix_timestamp;
-    guild.total_stake += member.total_stake;
+    guild.total_stake = guild.total_stake.checked_add(member.total_stake).unwrap();
     guild.last_stake_at = Clock::get()?.unix_timestamp;
 
     // Realloc data to zero.

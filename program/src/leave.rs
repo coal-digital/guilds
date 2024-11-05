@@ -23,7 +23,6 @@ pub fn process_leave(accounts: &[AccountInfo<'_>], _data: &[u8]) -> ProgramResul
         return Err(GuildError::TooEarly.into());
     }
     
-    member.authority = *signer_info.key;
     member.guild = solana_program::system_program::id();
     guild.total_stake = guild.total_stake.checked_sub(member.total_stake).unwrap();
 

@@ -46,7 +46,8 @@ pub fn process_unstake(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramResu
         msg!("Insufficient balance");
         return Err(GuildError::InsufficientBalance.into());
     }
-        // Update balances.
+    
+    // Update balances.
     member.total_stake = member.total_stake.checked_sub(amount).unwrap();
     config.total_stake = config.total_stake.checked_sub(amount).unwrap();
 
@@ -54,7 +55,6 @@ pub fn process_unstake(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramResu
         if member.guild.ne(guild_info.key) {
             return Err(GuildError::InvalidGuild.into());
         }
-
         // Update guild total stake.
         let guild = guild_info
             .is_writable()?
