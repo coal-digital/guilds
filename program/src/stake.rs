@@ -1,5 +1,4 @@
 use coal_guilds_api::prelude::*;
-use solana_program::msg;
 use steel::*;
 
 /// Stake adds tokens to a guild member's stake to earn a multiplier.
@@ -14,6 +13,7 @@ pub fn process_stake(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramResult
     else {
         return Err(ProgramError::NotEnoughAccountKeys);
     };
+
     signer_info.is_signer()?;
     member_tokens_info
         .is_writable()?
@@ -31,17 +31,19 @@ pub fn process_stake(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramResult
     let member = member_info
         .is_writable()?
         .to_account_mut::<Member>(&coal_guilds_api::ID)?
-        .check_mut(|m| m.authority.eq(signer_info.key))?;
+        .check_mut(|m| m.authority.eq(signer_info.key))?
+        .check_mut(|m| m.guild.eq(guild_info.key))?;
     
 
     // Update balances.
     member.total_stake = member.total_stake.checked_add(amount).unwrap();
     config.total_stake = config.total_stake.checked_add(amount).unwrap();
+    
     // Update timestamps.
     let clock = Clock::get()?;
     member.last_stake_at = clock.unix_timestamp;
 
-    if member.guild.ne(&system_program::ID) && member.guild.eq(guild_info.key) {
+    if member.guild.ne(&system_program::ID) {
         let guild = guild_info
             .is_writable()?
             .to_account_mut::<Guild>(&coal_guilds_api::ID)?;

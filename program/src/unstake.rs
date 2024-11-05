@@ -17,6 +17,7 @@ pub fn process_unstake(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramResu
     else {
         return Err(ProgramError::NotEnoughAccountKeys);
     };
+
     signer_info.is_signer()?;
     member_tokens_info
         .is_writable()?
