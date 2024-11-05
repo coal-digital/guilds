@@ -17,6 +17,7 @@ pub fn process_new_invite(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramR
     else {
         return Err(ProgramError::NotEnoughAccountKeys);
     };
+
     signer_info.is_signer()?;
     invite_info.is_writable()?.is_empty()?.has_seeds(
         &[INVITE, guild_info.key.as_ref(), member_info.key.as_ref()],
