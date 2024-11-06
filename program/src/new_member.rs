@@ -1,5 +1,5 @@
 use coal_guilds_api::{
-    consts::MEMBER,
+    consts::{LP_MINT_ADDRESS, MEMBER},
     instruction::NewMember,
     state::Member,
 };
@@ -25,6 +25,10 @@ pub fn process_new_member(accounts: &[AccountInfo<'_>], data: &[u8]) -> ProgramR
         &coal_guilds_api::id(),
     )?;
     system_program.is_program(&system_program::ID)?;
+
+    if !mint_info.key.eq(&LP_MINT_ADDRESS) {
+        return Err(ProgramError::InvalidAccountData);
+    }
 
     // Initialize the member account.
     create_account::<Member>(
