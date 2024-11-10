@@ -1,4 +1,5 @@
 mod initialize;
+mod delegate;
 mod new_guild;
 mod new_member;
 mod invite;
@@ -8,6 +9,7 @@ mod stake;
 mod unstake;
 
 use initialize::*;
+use delegate::*;
 use new_guild::*;
 use new_member::*;
 use invite::*;
@@ -31,6 +33,7 @@ pub fn process_instruction(
         GuildInstruction::Join => process_join(accounts, data)?,
         GuildInstruction::Leave => process_leave(accounts, data)?,
         GuildInstruction::Stake => process_stake(accounts, data)?,
+        GuildInstruction::Delegate => process_delegate(accounts, data)?,
         GuildInstruction::Unstake => process_unstake(accounts, data)?,
 
         // Guild

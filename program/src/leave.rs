@@ -24,6 +24,7 @@ pub fn process_leave(accounts: &[AccountInfo<'_>], _data: &[u8]) -> ProgramResul
     }
     
     member.guild = solana_program::system_program::id();
+    member.is_active = 1;
     guild.total_stake = guild.total_stake.checked_sub(member.total_stake).unwrap();
 
     Ok(())

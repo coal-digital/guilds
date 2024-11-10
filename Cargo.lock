@@ -517,7 +517,7 @@ dependencies = [
 
 [[package]]
 name = "coal-guilds-api"
-version = "1.0.0"
+version = "1.1.0"
 dependencies = [
  "array-const-fn-init",
  "bytemuck",
@@ -533,7 +533,7 @@ dependencies = [
 
 [[package]]
 name = "coal-guilds-program"
-version = "1.0.0"
+version = "1.1.0"
 dependencies = [
  "coal-guilds-api",
  "rand 0.8.5",

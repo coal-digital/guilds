@@ -104,6 +104,24 @@ pub fn join(signer: Pubkey, guild: Pubkey, guild_authority: Pubkey) -> Instructi
     }
 }
 
+pub fn delegate(signer: Pubkey, guild: Pubkey) -> Instruction {
+    let member = member_pda(signer);
+
+    Instruction {
+        program_id: crate::ID,
+        accounts: vec![
+            AccountMeta::new(signer, true),
+            AccountMeta::new(guild, false),
+            AccountMeta::new(member.0, false),
+            AccountMeta::new_readonly(system_program::ID, false),
+        ],
+        data: Delegate {
+            member_bump: member.1
+        }
+        .to_bytes(),
+    }
+}
+
 pub fn leave(signer: Pubkey, guild: Pubkey) -> Instruction {
     let member = member_pda(signer);
 

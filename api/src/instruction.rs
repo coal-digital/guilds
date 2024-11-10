@@ -9,6 +9,7 @@ pub enum GuildInstruction {
     Leave = 101,
     Stake = 102,
     Unstake = 103,
+    Delegate = 107,
     // Guild
     NewMember = 104,
     NewGuild = 105,
@@ -57,6 +58,12 @@ pub struct Join {
 
 #[repr(C)]
 #[derive(Clone, Copy, Debug, Pod, Zeroable)]
+pub struct Delegate {
+    pub member_bump: u8,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Pod, Zeroable)]
 pub struct Leave {}
 
 #[repr(C)]
@@ -72,6 +79,7 @@ pub struct Unstake {
 }
 
 instruction!(GuildInstruction, Initialize);
+instruction!(GuildInstruction, Delegate);
 instruction!(GuildInstruction, NewGuild);
 instruction!(GuildInstruction, NewMember);
 instruction!(GuildInstruction, NewInvite);
